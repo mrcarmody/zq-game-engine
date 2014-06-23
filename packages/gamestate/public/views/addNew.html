@@ -1,0 +1,18 @@
+<div class="modal-header">
+   <h3>Add a New Gamestate</h3>
+</div>
+<div class="modal-body">
+   <form role="form" data-ng-submit="create()">
+     <div class="form-group">
+        Map: <zq-select-map model="newGamestate"></zq-select-map>
+        <br/>
+        Character: <zq-select-character model="newGamestate"></zq-select-character>
+        <br/>
+        Command Queue: <input ng-model="newGamestate.commandQueue" />
+     </div>
+   </form>
+</div>
+<div class="modal-footer">
+   <button class="btn btn-primary" ng-click="create()">Save</button>
+   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

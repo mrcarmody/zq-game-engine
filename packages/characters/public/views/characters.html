@@ -1,0 +1,58 @@
+<div class="container" ng-controller="CharactersController" data-ng-init="find()">
+
+    <div id="" class="row">
+        <div class="col-sm-6">
+            <div ng-show="characters">
+                <span class="label label-info">Characters</span>
+            </div>
+        </div> 
+    </div>
+    <br/>
+    <div id="" class="row">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-success" ng-click="openNewCharacterModal()">Add a New Character</button>
+        </div>   
+    </div>   
+<!--    
+    <div id="" class="row">
+        <div class="col-sm-6">
+            <div ng-show="characters">
+                <span class="label label-info">Humans</span>
+            </div>
+        </div>  
+        <div class="col-sm-6">
+            <div ng-show="characters">
+                <span class="label label-info">Zombies</span>
+            </div>
+        </div>   
+    </div>
+-->
+
+    <br/>
+    <div id="" class="row"  ng-repeat="actor in characters | orderBy:'age':true" >
+        <div class="col-sm-5">
+            <div>
+                <div>
+                    <button type="button" class="btn btn-xs btn-primary" ng-click="openEditCharacterModal(actor)">Edit</button>
+                    <button type="button" class="btn btn-xs" ng-click="comingSoon()">Duplicate</button>
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="remove(actor)">Remove</button>
+                </div>
+                <div class="well" ng-click="characters.currentResponse = actor">
+                    <h3>{{actor.name}}</h3>
+                    <ul>
+                        <li><b>Age:</b> {{actor.age}}</li>
+                        <li><b>Health:</b> {{actor.health}}%</li>
+                        <li><b>Speed:</b> {{actor.speed}}</li>
+                        <li><b>Strength:</b> {{actor.strength}}</li>
+                        <li><b>Hunger:</b> {{actor.hunger}}</li>
+                        <li><b>Location:</b> X - {{actor.locationx}}, Y - {{actor.locationy}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 col-sm-offset-2">
+            <div>
+            </div>
+        </div>
+    </div>
+</div>

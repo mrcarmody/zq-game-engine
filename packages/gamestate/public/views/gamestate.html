@@ -1,0 +1,41 @@
+<div class="container" data-ng-controller="GamestateController" data-ng-init="find()">
+    <div id="" class="row">
+        <div class="col-sm-6">
+            <div>
+                <span class="label label-info">Gamestate</span>
+            </div>
+        </div> 
+    </div>
+   <br/>
+   
+    <div id="" class="row">
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-success" ng-click="openGamestateModal('new')">Add a New Gamestate</button>
+        </div>   
+    </div>
+    <br/>
+    <div id="" class="row"  ng-repeat="gamestate in gamestates" >
+        <div class="col-sm-5">
+            <div>
+                <div>
+                    <button type="button" class="btn btn-xs btn-primary" ng-click="openGamestateModal('edit',gamestate)">Edit</button>
+                    <button type="button" class="btn btn-xs" ng-click="comingSoon()">Duplicate</button>
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="remove(gamestate)">Remove</button>
+                </div>
+                <div class="well">
+                    <h3>Gamestate</h3>
+                    <ul>
+                        <li><b>Map:</b> {{gamestate.map}}</li>
+                        <li><b>Characters:</b> {{gamestate.characters}}%</li>
+                        <li><b>commandQueue:</b> {{gamestate.commandQueue}}</li>
+                        <li><b>currentCommand:</b> {{gamestate.currentCommand}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 col-sm-offset-2">
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
