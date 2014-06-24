@@ -9,14 +9,29 @@
 
    <br/>
    <div id="" class="row spacer">
-      <div class="col-sm-10 col-sm-offset-1">
+      <div class="col-sm-6 col-sm-offset-1">
          Gamestate: <zq-select-gamestate model="gamestate"></zq-select-gamestate>
          <br/>
-         <button type="button" class="btn btn-success" ng-click="runCommands = runCommands + 1" ng-show="gamestate">Run Commands</button>
+         <!-- <button type="button" class="btn btn-success" ng-click="runCommands = runCommands + 1" ng-show="gamestate">Run Commands</button> -->
          <br/>
          <button type="button" class="btn btn-success" ng-click="runLoop = !runLoop" ng-show="gamestate">Run Loop</button>
          <br/>
-         <zq-render-gamestate model="gamestate" run-commands="runCommands" run-loop="runLoop"></zq-render-gamestate>
+         <zq-render-gamestate model="gamestate" run-commands="runCommands" run-loop="runLoop" actors="actors"></zq-render-gamestate>
+      </div>
+      <div class="col-sm-5">
+          <div ng-repeat="actor in actors">
+              <div class="well">
+                  <h3>{{actor.name}}</h3>
+                  <ul>
+                      <li><b>Age:</b> {{actor.age}}</li>
+                      <li><b>Health:</b> {{actor.health}}%</li>
+                      <li><b>Speed:</b> {{actor.speed}}</li>
+                      <li><b>Strength:</b> {{actor.strength}}</li>
+                      <li><b>Hunger:</b> {{actor.hunger}}</li>
+                      <li><b>Location:</b> X - {{actor.locationx}}, Y - {{actor.locationy}}
+                  </ul>
+              </div>
+          </div>
       </div>
    </div>
 </div>

@@ -62,8 +62,7 @@ angular.module('mean').directive('zqRenderGamestate', [ '$compile', '$timeout', 
             return mapEl;
         };
 
-        var validMove = function(move){
-            var actor = scope.actors[0];
+        var validMove = function(actor,move){
             var dist = move.substr(0,move.length-1);
             var dir = move[2];
 
@@ -84,29 +83,38 @@ angular.module('mean').directive('zqRenderGamestate', [ '$compile', '$timeout', 
             }
         };
 
-        var moveActor = function(commandInfo){
-            var actor = scope.actors[0];
+        var moveActor = function(actor, commandInfo){
 
-            if (!validMove(commandInfo.move)){
-                return false;
+
+            // check if the actor died
+            if (commandInfo.type === 'die'){
+                // die
+                mapEl = mapEl.replace('id="y'+actor.locationy+'x'+actor.locationx+'">H</div>',
+                    'id="y'+actor.locationy+'x'+actor.locationx+'">D</div>');
+                
+            } else {
+                // check if the move is valid
+                if (!validMove(actor,commandInfo.move)){
+                    return false;
+                }
+
+                mapEl = mapEl.replace('id="y'+actor.locationy+'x'+actor.locationx+'">H</div>',
+                    'id="y'+actor.locationy+'x'+actor.locationx+'"></div>');
+
+                // this should be handled some other way than if logic
+                if(commandInfo.move[0] === '+' && commandInfo.move[2] === 'y'){
+                    actor.locationy++;
+                } else if (commandInfo.move[0] === '-' && commandInfo.move[2] === 'y'){
+                    actor.locationy--;
+                } else if (commandInfo.move[0] === '+' && commandInfo.move[2] === 'x'){
+                    actor.locationx++;
+                } else if (commandInfo.move[0] === '-' && commandInfo.move[2] === 'x'){
+                    actor.locationx--;
+                }
+
+                mapEl = mapEl.replace('id="y'+actor.locationy+'x'+actor.locationx+'"></div>',
+                    'id="y'+actor.locationy+'x'+actor.locationx+'">H</div>');
             }
-
-            mapEl = mapEl.replace('id="y'+actor.locationy+'x'+actor.locationx+'">H</div>',
-                'id="y'+actor.locationy+'x'+actor.locationx+'"></div>');
-
-            // this should be handled some other way than if logic
-            if(commandInfo.move[0] === '+' && commandInfo.move[2] === 'y'){
-                actor.locationy++;
-            } else if (commandInfo.move[0] === '-' && commandInfo.move[2] === 'y'){
-                actor.locationy--;
-            } else if (commandInfo.move[0] === '+' && commandInfo.move[2] === 'x'){
-                actor.locationx++;
-            } else if (commandInfo.move[0] === '-' && commandInfo.move[2] === 'x'){
-                actor.locationx--;
-            }
-
-            mapEl = mapEl.replace('id="y'+actor.locationy+'x'+actor.locationx+'"></div>',
-                'id="y'+actor.locationy+'x'+actor.locationx+'">H</div>');
 
         };
 
@@ -127,29 +135,21 @@ angular.module('mean').directive('zqRenderGamestate', [ '$compile', '$timeout', 
             },500);
         };
 
-        var getNextMove = function(){
-            var commandInfo = {};
-            var rand;
-
-            rand = Math.random();
-
-            if(rand < 0.25){
-                commandInfo.move = '+1x';
-            } else if (rand < 0.5){
-                commandInfo.move = '-1x';
-            } else if (rand < 0.75){
-                commandInfo.move = '+1y';
-            } else if (rand < 1){
-                commandInfo.move = '-1y';
-            }
-
-            return commandInfo;
-        };
-
         var timeoutFunction = function(){
-            var commandInfo = getNextMove();
+            // loop thru each actor
+            angular.forEach(scope.actors,function(actor){
+                // check the actor's health
+                if (actor.health > 0){   
+                    // if actor is alive, cause it to live 
+                    // and get the command that is returned
+                    var commandInfo = actor.live(scope.map);
+                    // if we received a command, execute it on the map
+                    if (commandInfo){
+                        moveActor(actor,commandInfo);
+                    }
+                }
+            });
             updateDOM();
-            moveActor(commandInfo);
             runGameLoop();
         };
 
@@ -213,7 +213,8 @@ angular.module('mean').directive('zqRenderGamestate', [ '$compile', '$timeout', 
         scope: {
             model: '=',
             runCommands: '=',
-            runLoop: '='
+            runLoop: '=',
+            actors: '='
         },
         restrict: 'E',
         link: linkFunction
