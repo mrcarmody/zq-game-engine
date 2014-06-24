@@ -79,7 +79,7 @@ angular.module('mean.gamestate').controller('GamestateController',
 
     $scope.find = function() {
         Gamestates.query(function(gamestates) {
-            $scope.gamestates = gamestates;
+            $scope.gamestates = Global.gamestates = gamestates;
         });
     };
 

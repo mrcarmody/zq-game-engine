@@ -1,0 +1,22 @@
+<div class="container" data-ng-controller="RenderController">
+    <div id="" class="row">
+        <div class="col-sm-6">
+            <div>
+                <span class="label label-info">Render</span>
+            </div>
+        </div> 
+    </div>
+
+   <br/>
+   <div id="" class="row spacer">
+      <div class="col-sm-10 col-sm-offset-1">
+         Gamestate: <zq-select-gamestate model="gamestate"></zq-select-gamestate>
+         <br/>
+         <button type="button" class="btn btn-success" ng-click="runCommands = runCommands + 1" ng-show="gamestate">Run Commands</button>
+         <br/>
+         <button type="button" class="btn btn-success" ng-click="runLoop = !runLoop" ng-show="gamestate">Run Loop</button>
+         <br/>
+         <zq-render-gamestate model="gamestate" run-commands="runCommands" run-loop="runLoop"></zq-render-gamestate>
+      </div>
+   </div>
+</div>

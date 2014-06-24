@@ -24,8 +24,8 @@ var GamestateSchema = new Schema({
         default: []
     },
     commandQueue: {
-        type: Array,
-        default: []
+        type: String,
+        default: ''
     },
     currentCommand: {
         type: Number,
