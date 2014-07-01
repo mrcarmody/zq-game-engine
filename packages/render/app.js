@@ -24,27 +24,5 @@ Render.register(function(app, auth, database) {
         menu: 'main'
     });
 
-    /**
-    //Uncomment to use. Requires meanio@0.3.7 or above
-    // Save settings with callback
-    // Use this for saving data from administration pages
-    Render.settings({
-        'someSetting': 'some value'
-    }, function(err, settings) {
-        //you now have the settings object
-    });
-
-    // Another save settings example this time with no callback
-    // This writes over the last settings.
-    Render.settings({
-        'anotherSettings': 'some value'
-    });
-
-    // Get settings. Retrieves latest saved settigns
-    Render.settings(function(err, settings) {
-        //you now have the settings object
-    });
-    */
-
     return Render;
 });
