@@ -28,27 +28,5 @@ Gamestate.register(function(app, auth, database) {
         menu: 'main'
     });
 
-    /**
-    //Uncomment to use. Requires meanio@0.3.7 or above
-    // Save settings with callback
-    // Use this for saving data from administration pages
-    Gamestate.settings({
-        'someSetting': 'some value'
-    }, function(err, settings) {
-        //you now have the settings object
-    });
-
-    // Another save settings example this time with no callback
-    // This writes over the last settings.
-    Gamestate.settings({
-        'anotherSettings': 'some value'
-    });
-
-    // Get settings. Retrieves latest saved settigns
-    Gamestate.settings(function(err, settings) {
-        //you now have the settings object
-    });
-    */
-
     return Gamestate;
 });

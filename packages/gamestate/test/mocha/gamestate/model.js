@@ -19,12 +19,12 @@ describe('<Unit Test>', function() {
     describe('Model Gamestate:', function() {
         beforeEach(function(done) {
             gamestate = new Gamestate({
-                name: 'Gamestate Name'
             });
 
             done();
         });
 
+        // why is this passing?  should not save without a map id...
         describe('Method Save', function() {
             it('should be able to save without problems', function(done) {
                 return gamestate.save(function(err) {

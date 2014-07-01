@@ -36,8 +36,10 @@ var GamestateSchema = new Schema({
 /**
  * Validations
  */
+ // valid map?  is there a way to check that the map
+ // value is actually a valid obejct id in the db?
 GamestateSchema.path('map').validate(function(map) {
-    return map.length;
+    return map;
 }, 'map Id cannot be blank');
 
 /**

@@ -5,7 +5,7 @@ var gamestates = require('../controllers/gamestates');
 // The Package is past automatically as first parameter
 module.exports = function(Gamestate, app, auth, database, gamestateModel) {
 
-    // gamestates
+    // gamestates REST API
     app.get('/gamestates',auth.requiresLogin, gamestates.all(gamestateModel));
     app.post('/gamestates', auth.requiresLogin, gamestates.create(gamestateModel));
     app.get('/gamestates/:gamestateId', auth.requiresLogin, gamestates.show);
