@@ -1,21 +1,53 @@
 'use strict';
 
-angular.module('mean').controller('CharactersController', ['$scope', '$stateParams', '$location', 'Global', 'Characters',
-  function($scope, $stateParams, $location, Global, Characters) {
-    $scope.global = Global;
+
+// define controller for add new character modal (used below)
+var characterModalInstanceCtrl = function ($scope, $modalInstance, character, Characters) {
+
+    if (character){
+        $scope.character = character;
+    }
+
+    $scope.newCharacter = {
+        name: '',
+        age: 0,
+        health: 100,
+        speed: 1,
+        strength: 1,
+        hunger: 0,
+        locationx: 0,
+        locationy: 0
+    };
 
     $scope.create = function() {
-        var character = new Characters({
-            title: this.title,
-            content: this.content
+        var character = new Characters($scope.newCharacter);
+        character.$save(function(character) {
+            // add the new character to the collection
+            $scope.characters.push(character);
+            $modalInstance.dismiss('saved');
         });
-        character.$save(function(response) {
-            $location.path('characters/' + response._id);
-        });
-
-        this.title = '';
-        this.content = '';
     };
+
+    $scope.update = function() {
+        $scope.character.$update(function(character) {
+            $modalInstance.dismiss('saved');
+        });
+    };
+
+    $scope.delete = function () {
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+};
+
+
+angular.module('mean').controller('CharactersController', ['$scope', '$stateParams', 
+  '$location', '$modal', 'Global', 'Characters',
+  function($scope, $stateParams, $location, $modal, Global, Characters) {
+    $scope.global = Global;
 
     $scope.update = function() {
         var character = $scope.character;
@@ -57,6 +89,33 @@ angular.module('mean').controller('CharactersController', ['$scope', '$statePara
         }, function(character) {
             $scope.character = character;
         });
+    };
+
+    $scope.openCharacterModal = function(context, character){
+        var url;
+
+        if (context === 'new'){
+            url = 'characters/views/addNew.html';
+        } else if (context === 'edit'){
+            url = 'characters/views/edit.html';
+        } else {
+            return false;
+        }
+
+        var modalInstance = $modal.open({
+            templateUrl: url,
+            controller: characterModalInstanceCtrl,
+            resolve: {
+                character: function(){
+                    return character;
+                }
+            }
+        });
+
+        var okCallback = function(){};
+        var cancelCallback = function(){};
+
+        modalInstance.result.then(okCallback, cancelCallback);
     };
 
   }

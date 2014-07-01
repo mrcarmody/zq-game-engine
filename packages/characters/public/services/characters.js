@@ -63,7 +63,9 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
 
     Character.prototype.move = function (map){
         // this is what we will return
-        var commandInfo = {};
+        var commandInfo = {
+            type: 'move'
+        };
         // get next move
         var move = this.getNextMove();
         // check move
@@ -74,11 +76,17 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
             commandInfo.move = move;
         }
 
-        return commandInfo;
+        if (commandInfo){
+            return commandInfo;
+        } else {
+            return false;
+        }
     };
 
     Character.prototype.live = function (map){
         var commandInfo;
+        // add to hunger (for living)
+        this.hunger += 0.1;
         // check for enough health to live
         // then for enough health to move
         if (this.health < 0.1){
@@ -90,20 +98,18 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
             // move
             commandInfo = this.move(map);
         }
-        // add to hunger (for living)
-        this.hunger += 0.1;
         // add to age
         this.age += 0.5;
 
         // once hunger hits 100, start hurting health
         if (this.hunger > 100){
-            this.health -= this.hunger - 100;
+            this.health -= (this.hunger - 100)*2;
             // 100 is the max hunger
             this.hunger = 100;
         }
 
-        // return the command, if any
-        if (commandInfo.type || commandInfo.move){
+        // return the command
+        if (commandInfo && commandInfo.type){
             return commandInfo;
         }
     };

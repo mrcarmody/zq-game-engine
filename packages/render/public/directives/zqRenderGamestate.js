@@ -63,6 +63,9 @@ angular.module('mean').directive('zqRenderGamestate', [ '$compile', '$timeout', 
         };
 
         var validMove = function(actor,move){
+            if (!actor || !move){
+                return false;
+            }
             var dist = move.substr(0,move.length-1);
             var dir = move[2];
 
@@ -84,8 +87,6 @@ angular.module('mean').directive('zqRenderGamestate', [ '$compile', '$timeout', 
         };
 
         var moveActor = function(actor, commandInfo){
-
-
             // check if the actor died
             if (commandInfo.type === 'die'){
                 // die

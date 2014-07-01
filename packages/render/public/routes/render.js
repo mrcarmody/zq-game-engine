@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mean.render').config(['$stateProvider',
+angular.module('mean').config(['$stateProvider',
     function($stateProvider) {
         $stateProvider.state('render', {
             url: '/render',

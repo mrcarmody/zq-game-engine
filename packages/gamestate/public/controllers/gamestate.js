@@ -44,7 +44,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, gamestate, Gamestates)
 
 
 
-angular.module('mean.gamestate').controller('GamestateController', 
+angular.module('mean').controller('GamestateController', 
     ['$scope', '$stateParams', '$location', '$modal', 'Global', 'Gamestates',
     function($scope, $stateParams, $location, $modal, Global, Gamestates) {
         $scope.global = Global;

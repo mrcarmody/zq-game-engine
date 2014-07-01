@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mean.render').factory('Render', [
+angular.module('mean').factory('Render', [
     function() {
         return {
             name: 'render'

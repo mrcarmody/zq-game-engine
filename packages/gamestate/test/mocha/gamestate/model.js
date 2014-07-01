@@ -36,7 +36,7 @@ describe('<Unit Test>', function() {
             it('should have set the default gamestate data', function(done) {
                 // check defaults
                 gamestate.characters.should.be.an.instanceOf(Array);
-                gamestate.commandQueue.should.be.an.instanceOf(Array);
+                gamestate.commandQueue.should.be.an.instanceOf(String);
                 gamestate.should.have.property('currentCommand',0);
                 done();
             });

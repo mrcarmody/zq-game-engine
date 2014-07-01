@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mean.gamestate').config(['$stateProvider', '$urlRouterProvider',
+angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('gamestates', {

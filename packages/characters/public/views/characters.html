@@ -10,7 +10,7 @@
     <br/>
     <div id="" class="row">
         <div class="col-sm-12">
-            <button type="button" class="btn btn-success" ng-click="openNewCharacterModal()">Add a New Character</button>
+            <button type="button" class="btn btn-success" ng-click="openCharacterModal('new')">Add a New Character</button>
         </div>   
     </div>   
 <!--    
@@ -33,7 +33,7 @@
         <div class="col-sm-5">
             <div>
                 <div>
-                    <button type="button" class="btn btn-xs btn-primary" ng-click="openEditCharacterModal(actor)">Edit</button>
+                    <button type="button" class="btn btn-xs btn-primary" ng-click="openCharacterModal('edit',actor)">Edit</button>
                     <button type="button" class="btn btn-xs" ng-click="comingSoon()">Duplicate</button>
                     <button type="button" class="btn btn-xs btn-danger" ng-click="remove(actor)">Remove</button>
                 </div>
