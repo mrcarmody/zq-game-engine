@@ -5,7 +5,7 @@ var characters = require('../controllers/characters');
 // The Package is past automatically as first parameter
 module.exports = function(Characters, app, auth, database, characterModel) {
 
-    // characters
+    // characters REST API
     app.get('/characters',auth.requiresLogin, characters.all(characterModel));
     app.post('/characters', auth.requiresLogin, characters.create(characterModel));
     app.get('/characters/:characterId', auth.requiresLogin, characters.show);

@@ -1,0 +1,29 @@
+<div class="modal-header">
+   <h3>Edit Character</h3>
+</div>
+<div class="modal-body">
+   <form role="form" data-ng-submit="update()">
+     <div class="form-group">
+        Name: <input type="text" ng-model="character.name" />
+        <br/>
+        Age: <input type="text" ng-model="character.age" />
+        <br/>
+        Health: <input type="text" ng-model="character.health" />
+        <br/>
+        Speed: <input type="text" ng-model="character.speed" />
+        <br/>
+        strength: <input type="text" ng-model="character.strength" />
+        <br/>
+        Hunger: <input type="text" ng-model="character.hunger" />
+        <br/>
+        Start Location X: <input type="text" ng-model="character.locationx" />
+        <br/>
+        Start Location Y: <input type="text" ng-model="character.locationy" />
+        <br/>
+     </div>
+   </form>
+</div>
+<div class="modal-footer">
+   <button class="btn btn-primary" ng-click="update()">Save</button>
+   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

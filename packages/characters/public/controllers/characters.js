@@ -1,13 +1,14 @@
 'use strict';
 
-
-// define controller for add new character modal (used below)
+// define controller for add/edit character modal (used below)
 var characterModalInstanceCtrl = function ($scope, $modalInstance, character, Characters) {
 
     if (character){
         $scope.character = character;
     }
 
+    // a base characher object
+    // - move to a class?  maybe use the $resource?
     $scope.newCharacter = {
         name: '',
         age: 0,
@@ -19,6 +20,7 @@ var characterModalInstanceCtrl = function ($scope, $modalInstance, character, Ch
         locationy: 0
     };
 
+    // create a character
     $scope.create = function() {
         var character = new Characters($scope.newCharacter);
         character.$save(function(character) {
@@ -28,16 +30,19 @@ var characterModalInstanceCtrl = function ($scope, $modalInstance, character, Ch
         });
     };
 
+    // update a character
     $scope.update = function() {
         $scope.character.$update(function(character) {
             $modalInstance.dismiss('saved');
         });
     };
 
+    // delete - coming soon
     $scope.delete = function () {
         $modalInstance.close();
     };
 
+    // cancel the modal
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -49,6 +54,7 @@ angular.module('mean').controller('CharactersController', ['$scope', '$statePara
   function($scope, $stateParams, $location, $modal, Global, Characters) {
     $scope.global = Global;
 
+    // is this used?  maybe can remove
     $scope.update = function() {
         var character = $scope.character;
         if (!character.updated) {
@@ -61,6 +67,7 @@ angular.module('mean').controller('CharactersController', ['$scope', '$statePara
         });
     };
 
+    // coming soon
     $scope.remove = function(character) {
         if (character) {
             character.$remove();
@@ -77,12 +84,14 @@ angular.module('mean').controller('CharactersController', ['$scope', '$statePara
         }
     };
 
+    // get all characters
     $scope.find = function() {
         Characters.query(function(characters) {
             $scope.characters = Global.characters = characters;
         });
     };
 
+    // get a specific character
     $scope.findOne = function() {
         Characters.get({
             characterId: $stateParams.characterId
@@ -91,6 +100,7 @@ angular.module('mean').controller('CharactersController', ['$scope', '$statePara
         });
     };
 
+    // open the character modal
     $scope.openCharacterModal = function(context, character){
         var url;
 
@@ -102,6 +112,7 @@ angular.module('mean').controller('CharactersController', ['$scope', '$statePara
             return false;
         }
 
+        // launch a model
         var modalInstance = $modal.open({
             templateUrl: url,
             controller: characterModalInstanceCtrl,
@@ -112,6 +123,7 @@ angular.module('mean').controller('CharactersController', ['$scope', '$statePara
             }
         });
 
+        // placeholder functions
         var okCallback = function(){};
         var cancelCallback = function(){};
 

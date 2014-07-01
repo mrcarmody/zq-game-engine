@@ -29,39 +29,7 @@ Characters.register(function(app, auth, database) {
       link: 'characters',
       roles: ['authenticated'],
       menu: 'main'
-    });    
-    // - Humans
-/*    Characters.menus.add({
-      title: 'Humans',
-      link: 'characters.humans',
-      roles: ['authenticated'],
-      menu: 'main'
     });
-    // - Zombies
-    Characters.menus.add({
-      title: 'Zombies',
-      link: 'characters.zombies',
-      roles: ['authenticated'],
-      menu: 'main'
-    });*/
-
-    /*
-    //Uncomment to use. Requires meanio@0.3.7 or above
-    // Save settings with callback
-    // Use this for saving data from administration pages
-    Characters.settings({'someSetting':'some value'},function (err, settings) {
-      //you now have the settings object
-    });
-
-    // Another save settings example this time with no callback
-    // This writes over the last settings.
-    Characters.settings({'anotherSettings':'some value'});
-
-    // Get settings. Retrieves latest saved settigns
-    Characters.settings(function (err, settings) {
-      //you now have the settings object
-    });
-    */
 
     return Characters;
 });

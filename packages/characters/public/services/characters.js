@@ -1,6 +1,6 @@
 'use strict';
 
-//Characters service used for todos REST endpoint
+//Characters service used for calling the REST endpoint
 angular.module('mean').factory('Characters', ['$resource', function($resource) {
     var Character = $resource('characters/:characterId', {
         characterId: '@_id'
@@ -10,19 +10,21 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
         }
     });
 
+    // type of AI - default is currently 'random'
     Character.prototype.ai = 'random';
 
-
+    // get the character's next move
+    // currently only a 'random' move is supported
     Character.prototype.getNextMove = function (){
         var move = {};
 
         // check the AI type
         // -- rando AI
         if (this.ai === 'random'){
+
+            // really basic randomizer
             var rand;
-
             rand = Math.random();
-
             if(rand < 0.25){
                 move = '+1x';
             } else if (rand < 0.5){
@@ -37,14 +39,17 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
         return move;
     };
 
+    // check a move to make sure it is possible, given the map setup
     Character.prototype.isValidMove = function (map, move){
             var actor = this;
+            // get the distance and direction of the move
             var dist = move.substr(0,move.length-1);
             var dir = move[2];
 
             var newLoc,
                 mapSize;
 
+            // define some vars based on the direction of the move
             if (dir === 'y'){
                 newLoc = actor.locationy + parseInt(dist);
                 mapSize = map.sizey;
@@ -54,6 +59,8 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
             } 
 
             // validation
+            // - the new location should be a positive co-ord that is 
+            //   less then the total map size
             if (newLoc >= 0 && newLoc < mapSize){
                 return true;
             }
@@ -61,11 +68,17 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
             return false;        
     };
 
+    // Move the character
+    // - get the next (potential) move from the AI
+    // - check that can be made
+    // - add to hunger, if the move can be made 
+    //   (ideally this would be a callback that is run after
+    //    the move is validated and carried forth on the map)
     Character.prototype.move = function (map){
-        // this is what we will return
         var commandInfo = {
             type: 'move'
         };
+
         // get next move
         var move = this.getNextMove();
         // check move
@@ -76,13 +89,16 @@ angular.module('mean').factory('Characters', ['$resource', function($resource) {
             commandInfo.move = move;
         }
 
-        if (commandInfo){
-            return commandInfo;
-        } else {
-            return false;
-        }
+        return commandInfo;
     };
 
+    // this is run each game cycle
+    // it is responsible for:
+    // - adding the base amount of hunger
+    // - verifying that the character has enough heath to carry out a move
+    // - adding to the age
+    // - reducing the character's health if too hungry
+    // - getting and returning a move to be carried out for the character
     Character.prototype.live = function (map){
         var commandInfo;
         // add to hunger (for living)

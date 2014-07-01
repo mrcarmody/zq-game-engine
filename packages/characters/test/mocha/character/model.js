@@ -42,7 +42,7 @@ describe('<Unit Test>', function() {
                 done();
             });
 
-            it('should be able to show an error when try to save without name', function(done) {
+            it('should show an error when try to save without name', function(done) {
                 character.name = '';
 
                 return character.save(function(err) {
@@ -50,6 +50,107 @@ describe('<Unit Test>', function() {
                     done();
                 });
             });
+
+            it('should show an error when try to save a negative age', function(done) {
+                character.age = -1;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save an invalid health (too low)', function(done) {
+                character.health = -1;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save an invalid health (too high)', function(done) {
+                character.health = 101;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+            
+            it('should show an error when try to save an invalid speed (too low)', function(done) {
+                character.speed =- 1;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save an invalid speed (too high)', function(done) {
+                character.speed = 101;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+            
+            it('should show an error when try to save an invalid strength (too low)', function(done) {
+                character.strength =- 1;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save an invalid strength (too high)', function(done) {
+                character.strength = 101;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+            
+            it('should show an error when try to save an invalid hunger (too low)', function(done) {
+                character.hunger =- 1;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save an invalid hunger (too high)', function(done) {
+                character.hunger = 101;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            
+            it('should show an error when try to save an invalid locationx (too low)', function(done) {
+                character.locationx =- 1;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save an invalid locationy (too low)', function(done) {
+                character.locationy = -1;
+
+                return character.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
         });
 
         afterEach(function(done) {
