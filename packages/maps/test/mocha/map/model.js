@@ -39,8 +39,26 @@ describe('<Unit Test>', function() {
                 done();
             });
 
-            it('should be able to show an error when try to save without name', function(done) {
+            it('should show an error when try to save without name', function(done) {
                 map.name = '';
+
+                return map.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save with an invalid sizex (too low)', function(done) {
+                map.sizex = -1;
+
+                return map.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should show an error when try to save with an invalid sizey (too low)', function(done) {
+                map.sizey = -1;
 
                 return map.save(function(err) {
                     should.exist(err);

@@ -31,24 +31,7 @@ Maps.register(function(app, auth, database) {
       menu: 'main'
     });
 
-    /*
-    //Uncomment to use. Requires meanio@0.3.7 or above
-    // Save settings with callback
-    // Use this for saving data from administration pages
-    Maps.settings({'someSetting':'some value'},function (err, settings) {
-      //you now have the settings object
-    });
-
-    // Another save settings example this time with no callback
-    // This writes over the last settings.
-    Maps.settings({'anotherSettings':'some value'});
-
-    // Get settings. Retrieves latest saved settigns
-    Maps.settings(function (err, settings) {
-      //you now have the settings object
-    });
-    */
-    // css
+    // include the css
     Maps.aggregateAsset('css','maps.css');
 
     return Maps;

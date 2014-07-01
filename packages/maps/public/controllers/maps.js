@@ -4,19 +4,19 @@ angular.module('mean').controller('MapsController', ['$scope', '$stateParams', '
   function($scope, $stateParams, $location, Global, Maps) {
     $scope.global = Global;
 
+    // coming soon
     $scope.create = function() {
         var map = new Maps({
-            title: this.title,
-            content: this.content
+            // map data
         });
         map.$save(function(response) {
             $location.path('maps/' + response._id);
         });
 
-        this.title = '';
-        this.content = '';
+        // reset input vars
     };
 
+    // coming soon
     $scope.update = function() {
         var map = $scope.map;
         if (!map.updated) {
@@ -29,6 +29,7 @@ angular.module('mean').controller('MapsController', ['$scope', '$stateParams', '
         });
     };
 
+    // coming soon
     $scope.remove = function(map) {
         if (map) {
             map.$remove();
@@ -45,12 +46,14 @@ angular.module('mean').controller('MapsController', ['$scope', '$stateParams', '
         }
     };
 
+    // get all maps
     $scope.find = function() {
         Maps.query(function(maps) {
             $scope.maps = Global.maps = maps;
         });
     };
 
+    // get specific map
     $scope.findOne = function() {
         Maps.get({
             mapId: $stateParams.mapId
@@ -58,7 +61,6 @@ angular.module('mean').controller('MapsController', ['$scope', '$stateParams', '
             $scope.map = map;
         });
     };
-
 
   }
 ]);

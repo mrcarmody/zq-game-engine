@@ -29,9 +29,18 @@ var mapSchema = new Schema({
 /**
  * Validations
  */
+ // - check for a name
 mapSchema.path('name').validate(function(text) {
     return text.length;
 }, 'name cannot be blank');
+ // - must have a positive sizex
+mapSchema.path('sizex').validate(function(sizex) {
+    return sizex >= 0;
+}, 'sizex must be a positive integer');
+ // - must have a positive sizey
+mapSchema.path('sizey').validate(function(sizey) {
+    return sizey >= 0;
+}, 'sizey must be a positive integer');
 
 /**
  * Statics
