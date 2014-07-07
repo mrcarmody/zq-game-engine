@@ -43,13 +43,17 @@ var characterSchema = new Schema({
     locationy: {
         type: Number,
         default: 0
+    },
+    icon: {
+        type: String,
+        default: 'H'
     }
 });
 
 /**
  * Validations
  */
- // - we must have a name
+// - we must have a name
 characterSchema.path('name').validate(function(name) {
     return name.length;
 }, 'name cannot be blank');

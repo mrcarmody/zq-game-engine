@@ -174,10 +174,10 @@
                 scope = $rootScope.$new();
 
                 // mock the Characters service
-                var mockCharacters = function(){
+                var mockCharacters = function() {
                     return {
-                        $save: function(){
-                            
+                        $save: function() {
+
                         }
                     };
                 };
@@ -186,11 +186,12 @@
                     $scope: scope,
                     // mock modal instance
                     $modalInstance: {
-                        dismiss: function(){},
-                        close: function(){}
+                        dismiss: function() {},
+                        close: function() {}
                     },
                     character: false,
-                    Characters: mockCharacters
+                    Characters: mockCharacters,
+                    Global: {}
                 });
 
                 $httpBackend = _$httpBackend_;
@@ -222,8 +223,8 @@
                         return {
                             _id: '525cf20451979dea2c000001',
                             name: 'A test character',
-                            age: 0,
-                            health: 100,
+                            age: 30,
+                            health: 80,
                             speed: 1,
                             strength: 1,
                             hunger: 0,
@@ -245,11 +246,11 @@
                     };
 
                     // test post request is sent
-                    //$httpBackend.expectPOST('characters', postCharacterData()).respond(responseCharacterData());
+                    $httpBackend.expectPOST('characters', postCharacterData()).respond(responseCharacterData());
 
                     // Run controller
                     scope.create();
-                   // $httpBackend.flush();
+                    $httpBackend.flush();
 
                     // test form input(s) are reset
                     expect(scope.newCharacter.name).toEqual('');

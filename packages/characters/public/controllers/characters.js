@@ -1,13 +1,13 @@
 'use strict';
 
 // define controller for add/edit character modal (used below)
-var characterModalInstanceCtrl = function ($scope, $modalInstance, character, Characters) {
+var characterModalInstanceCtrl = function($scope, $modalInstance, character, Characters, Global) {
 
-    if (character){
+    if (character) {
         $scope.character = character;
     }
 
-    // a base characher object
+    // set up a base characher object
     // - move to a class?  maybe use the $resource?
     $scope.newCharacter = {
         name: '',
@@ -17,15 +17,19 @@ var characterModalInstanceCtrl = function ($scope, $modalInstance, character, Ch
         strength: 1,
         hunger: 0,
         locationx: 0,
-        locationy: 0
+        locationy: 0,
+        icon: 'H'
     };
 
     // create a character
     $scope.create = function() {
+        console.log($scope.newCharacter);
         var character = new Characters($scope.newCharacter);
+        console.log(character);
         character.$save(function(character) {
+            console.log('ok');
             // add the new character to the collection
-            $scope.characters.push(character);
+            Global.characters.push(character);
             $modalInstance.dismiss('saved');
         });
     };
@@ -38,97 +42,97 @@ var characterModalInstanceCtrl = function ($scope, $modalInstance, character, Ch
     };
 
     // delete - coming soon
-    $scope.delete = function () {
+    $scope.delete = function() {
         $modalInstance.close();
     };
 
     // cancel the modal
-    $scope.cancel = function () {
+    $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     };
 };
 
 
-angular.module('mean').controller('CharactersController', ['$scope', '$stateParams', 
-  '$location', '$modal', 'Global', 'Characters',
-  function($scope, $stateParams, $location, $modal, Global, Characters) {
-    $scope.global = Global;
+angular.module('mean').controller('CharactersController', ['$scope', '$stateParams',
+    '$location', '$modal', 'Global', 'Characters',
+    function($scope, $stateParams, $location, $modal, Global, Characters) {
+        $scope.global = Global;
 
-    // is this used?  maybe can remove
-    $scope.update = function() {
-        var character = $scope.character;
-        if (!character.updated) {
-            character.updated = [];
-        }
-        character.updated.push(new Date().getTime());
-
-        character.$update(function() {
-            $location.path('characters/' + character._id);
-        });
-    };
-
-    // coming soon
-    $scope.remove = function(character) {
-        if (character) {
-            character.$remove();
-
-            for (var i in $scope.characters) {
-                if ($scope.characters[i] === character) {
-                    $scope.characters.splice(i, 1);
-                }
+        // is this used?  maybe can remove
+        $scope.update = function() {
+            var character = $scope.character;
+            if (!character.updated) {
+                character.updated = [];
             }
-        } else {
-            $scope.character.$remove(function(response) {
-                $location.path('characters');
+            character.updated.push(new Date().getTime());
+
+            character.$update(function() {
+                $location.path('characters/' + character._id);
             });
-        }
-    };
+        };
 
-    // get all characters
-    $scope.find = function() {
-        Characters.query(function(characters) {
-            $scope.characters = Global.characters = characters;
-        });
-    };
+        // coming soon
+        $scope.remove = function(character) {
+            if (character) {
+                character.$remove();
 
-    // get a specific character
-    $scope.findOne = function() {
-        Characters.get({
-            characterId: $stateParams.characterId
-        }, function(character) {
-            $scope.character = character;
-        });
-    };
-
-    // open the character modal
-    $scope.openCharacterModal = function(context, character){
-        var url;
-
-        if (context === 'new'){
-            url = 'characters/views/addNew.html';
-        } else if (context === 'edit'){
-            url = 'characters/views/edit.html';
-        } else {
-            return false;
-        }
-
-        // launch a model
-        var modalInstance = $modal.open({
-            templateUrl: url,
-            controller: characterModalInstanceCtrl,
-            resolve: {
-                character: function(){
-                    return character;
+                for (var i in $scope.characters) {
+                    if ($scope.characters[i] === character) {
+                        $scope.characters.splice(i, 1);
+                    }
                 }
+            } else {
+                $scope.character.$remove(function(response) {
+                    $location.path('characters');
+                });
             }
-        });
+        };
 
-        // placeholder functions
-        var okCallback = function(){};
-        var cancelCallback = function(){};
+        // get all characters
+        $scope.find = function() {
+            Characters.query(function(characters) {
+                $scope.characters = Global.characters = characters;
+            });
+        };
 
-        modalInstance.result.then(okCallback, cancelCallback);
-    };
+        // get a specific character
+        $scope.findOne = function() {
+            Characters.get({
+                characterId: $stateParams.characterId
+            }, function(character) {
+                $scope.character = character;
+            });
+        };
 
-  }
+        // open the character modal
+        $scope.openCharacterModal = function(context, character) {
+            var url;
+
+            if (context === 'new') {
+                url = 'characters/views/addNew.html';
+            } else if (context === 'edit') {
+                url = 'characters/views/edit.html';
+            } else {
+                return false;
+            }
+
+            // launch a model
+            var modalInstance = $modal.open({
+                templateUrl: url,
+                controller: characterModalInstanceCtrl,
+                resolve: {
+                    character: function() {
+                        return character;
+                    }
+                }
+            });
+
+            // placeholder functions
+            var okCallback = function() {};
+            var cancelCallback = function() {};
+
+            modalInstance.result.then(okCallback, cancelCallback);
+        };
+
+    }
 ]);
